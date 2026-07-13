@@ -10,9 +10,10 @@ Documentation following this guideline should also inherit the [Language Guideli
 
 ### History
 
-| Date       | Author     | Description |
-| ---------- | ---------- | ----------- |
-| 2026-07-10 | Zach Smith | Release     |
+| Date       | Author     | Description                                                |
+| ---------- | ---------- | ---------------------------------------------------------- |
+| 2026-07-10 | Zach Smith | Release                                                    |
+| 2026-07-13 | Zach Smith | Tweak prerequisite, change config props from list to table |
 
 # Guideline
 
@@ -98,7 +99,7 @@ A brief sentence or paragraph explaining the scope of the installation procedure
 
 #### Prerequisite Subsection
 
-A level-3 subheading containing all the required hardware, software, accounts, permissions, etc. that the instructions _will not_ explain how to acquire/set up. For example, if Python is a requirement but the instructions do not include steps to install it, it is considered a prerequisite.
+A level-3 subheading containing all the required hardware, accounts, permissions, etc. that the instructions _cannot_ provision. For example, if an Azure administrator account is a requirement, it is considered a prerequisite.
 
 - Bulleted list
 - Terse terms
@@ -132,14 +133,22 @@ Provide a sample configuration. If the project uses a binary config file such as
 }
 ```
 
-#### Property List
+#### Property Table
 
-- For each property, provide a bold lead-in bulleted list entry.
-- If applicable, include the object type behind the property name.
+A table should be provided with property name, type, default value, and description.
+
+- Properties that require user input during configuration shall be considered required.
+- Required properties shall have an asterisk in the Default column.
+- If there are any required properties with an asterisk, a `\*_required_` footnote shall be below the table.
+- If all properties are required and have no default values, the Default column, asterisks, and footnote can be omitted.
 
 ```md
-- **prop_1** [Binary]: Defines wether the config is turned on.
-- **prop_2** [String]: Text to show the user.
+| Property | Type   | Default      | Description                             |
+| -------- | ------ | ------------ | --------------------------------------- |
+| prop1    | binary | \*           | Defines wether the config is turned on. |
+| prop2    | string | "helloworld" | Text to show the user.                  |
+
+\*_required_
 ```
 
 #### Configuration Instructions
