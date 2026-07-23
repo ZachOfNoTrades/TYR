@@ -14,6 +14,7 @@ Documentation following this guideline should also inherit the [Language Guideli
 | ---------- | ---------- | ---------------------------------------------------------- |
 | 2026-07-10 | Zach Smith | Release                                                    |
 | 2026-07-13 | Zach Smith | Tweak prerequisite, change config props from list to table |
+| 2026-07-23 | Zach Smith | Add attributes rules, rename key table section             |
 
 # Guideline
 
@@ -112,17 +113,17 @@ Long procedures may be phased into multiple level-3 subsections.
 
 ## Configuration
 
-This section provides instructions on how to set configurable properties for the software. This section should be omitted if there is a dedicated configuration document, or if there is no configuration.
+This section provides instructions on how to set configurable values for the software. This section should be omitted if there is a dedicated configuration document, or if there is no configuration.
 
 ### Structure
 
 The Config section should contain these elements. These do not need to be separated into subsections.
 
 1. Sample Config Code Fence
-1. Property List
+1. Key Table
 1. Configuration Instructions
 
-#### Sample Config Code Fence
+### Sample Config Code Fence
 
 Provide a sample configuration. If the project uses a binary config file such as `config.json`, it is recommended to structure the code fence like the file structure.
 
@@ -133,25 +134,46 @@ Provide a sample configuration. If the project uses a binary config file such as
 }
 ```
 
-#### Property Table
+### Key Table
 
-A table should be provided with property name, type, default value, and description.
+A table should be provided with the following columns:
 
-- Properties that require user input during configuration shall be considered required.
-- Required properties shall have an asterisk in the Default column.
-- If there are any required properties with an asterisk, a `\*_required_` footnote shall be below the table.
-- If all properties are required and have no default values, the Default column, asterisks, and footnote can be omitted.
+- **Key**: the key name
+- **Type**: The data type of the key
+- **Default**: Either the default value, or any applicable properties
+- **Description**: Description/use of the key
+
+#### Attributes and footnotes
+
+- Key values may have certain attributes such as "required".
+- Attributes are denoted via a symbol in the Default column and a footnote under the table.
+- Footnotes shall be formatted as the symbol followed by the property note italicized (e.g. `\* _required_`).
+- If "required" is an attribute, it shall be the first attribute listed and the asterisk shall be reserved for it.
+- Symbols should use the standard footnote symbol sequence of:
+  - `*` Asterisk (Reserved for "required" if applicable)
+  - `†` Dagger
+  - `‡` Double dagger
+  - `§` Section sign
+  - `‖` Parallels
+  - `¶` Pilcrow
+  - Further attributes may use a double symbol (i.e. double asterisk `**`)
+  - Multiple symbols may be used in the same table cell.
+- The Default column may be omitted if there are no attributes or default values.
+
+#### Sample table
 
 ```md
-| Property | Type   | Default      | Description                             |
-| -------- | ------ | ------------ | --------------------------------------- |
-| prop1    | binary | \*           | Defines wether the config is turned on. |
-| prop2    | string | "helloworld" | Text to show the user.                  |
+| Key           | Type    | Default      | Description                                      |
+| ------------- | ------- | ------------ | ------------------------------------------------ |
+| prop1         | boolean | \*           | Defines whether the config is turned on.         |
+| prop2         | string  | "helloworld" | Text to show the user.                           |
+| random_number | int     | †            | A randomly generated number when the app starts. |
 
-\*_required_
+\*_required_  
+† _autogenerates_
 ```
 
-#### Configuration Instructions
+### Configuration Instructions
 
 Brief instructions how to set up the configuration. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
 
