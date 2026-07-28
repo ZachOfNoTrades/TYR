@@ -8,18 +8,15 @@ This document covers the voice, grammar, and naming conventions used across code
 
 ### History
 
-| Date       | Author     | Description                         |
-| ---------- | ---------- | ----------------------------------- |
-| 2026-07-10 | Zach Smith | Release                             |
-| 2026-07-17 | Zach Smith | Add General Language, Code sections |
+| Date       | Author     | Description                                                                          |
+| ---------- | ---------- | ------------------------------------------------------------------------------------ |
+| 2026-07-10 | Zach Smith | Release                                                                              |
+| 2026-07-17 | Zach Smith | Add General Language, Code sections                                                  |
+| 2026-07-28 | Zach Smith | Remove duplicate rules in General Language, add glossary note, add function comments |
 
 # Guideline
 
 ## General Language
-
-- Impersonal language should be used. Avoid using direct addressing such as "I", "you", etc.
-- A direct imperative mood is recommended
-- Writing should be terse
 
 **Mood**
 
@@ -45,6 +42,8 @@ This document covers the voice, grammar, and naming conventions used across code
 - Each segment of names should be ordered from largest-scope to smallest-scope e.g. `name_first` not `first_name`
 - Booleans should read as a yes/no question e.g. `is_primary`, `enabled`
 
+Any industry-standard abbreviation that is not made clearer by its verbose form may be used, provided all source files utilizing the abbreviation contain a glossary listing the verbose name, abbreviation, and definition — e.g. `rts` → *Request to Send* in radio communication.
+
 All object-oriented programming (OOP) languages should adhere to the following casing conventions:
 
 | Locals Fields | Constants         | Functions    |
@@ -62,19 +61,20 @@ Listed non-OOP languages should adhere to the following casing conventions:
 
 #### Language
 
-Comments should always be current state and never reference the state of previous code or mention migrations.
-
-Comments do not need to be added to modified code unless the code necessitates a comment - reasons for modification should be captured in commit descriptions rather than code.
+- The language of comments should continue to follow the [General Language](#general-language) rules, with a focus on terse, plain language
+- Comments should always be current state and never reference the state of previous code or mention migrations.
+- Comments do not need to be added to modified code unless the code necessitates a comment - reasons for modification should be captured in commit descriptions rather than code.
 
 #### Categories
 
-Comments have 3 categories:
+Comments have the following categories:
 
 - Inline comments: Comments for a single line of code
 - Block comments: Comments for a code block that performs a single action
 - Section comments: Comments for a large code block with multiple actions
+- Function comments: Comments describing the purpose of a function/method
 
-The prefixes (`Inline comment:`, `Block comment:`, `Section comment:`) shown in the examples below are for illustration only and are not part of the required format.
+The prefixes like `Inline comment:` shown in the examples below are for illustration only and are not part of the required format.
 
 #### Inline Comments
 
@@ -127,9 +127,20 @@ function FunctionOne(x) {
 }
 ```
 
+#### Function Comments
+
+Function comments provide the purpose of a function/method. These comments should be above the function, identical to a block comment.
+
+```js
+// Function comment: fetches user data from the API and returns a formatted record
+function GetUser(userId) {
+  const data = api.fetch(userId);
+  return formatRecord(data);
+}
+```
+
 ## Documentation
 
-## Instructions
 ### Instructions
 
 This section applies to instructions such as installation and usage procedures found in READMEs or other project documentation.
@@ -143,6 +154,7 @@ This section applies to instructions such as installation and usage procedures f
 #### Codeblocks
 
 - User-supplied values are displayed as `{placeholder}` in braces.
+- Any change directory command (`cd`) only lives in the scope of the section/subsection it appears in. A `cd` command must be given at the start of each section, even if the directory is unchanged from the previous section.
 - When a command carries placeholders, add a concrete `# Example` beneath it in the same fence:
 
   ```

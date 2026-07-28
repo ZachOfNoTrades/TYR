@@ -8,9 +8,10 @@ This document covers suggested scope and planning of Git repository commits, spe
 
 ### History
 
-| Date       | Author     | Description |
-| ---------- | ---------- | ----------- |
-| 2026-03-31 | Zach Smith | Release     |
+| Date       | Author     | Description                                     |
+| ---------- | ---------- | ----------------------------------------------- |
+| 2026-03-31 | Zach Smith | Release                                         |
+| 2026-07-15 | Zach Smith | Added Commit Zero; Added "least diff" principle |
 
 ## Guidelines
 
@@ -23,6 +24,10 @@ This document covers suggested scope and planning of Git repository commits, spe
 ### Feature Plan
 
 For the sample program, a feature will be added to add Genus classifications to animal species.
+
+#### Commit Zero - Documentation
+
+Prior to the first commit of code changes, it is recommended to create documentation drafts so the commits can work towards a specific end goal.
 
 #### First Commit - Add Proof-of-Concept
 
@@ -102,7 +107,8 @@ For the sample program, a page will be added to view all Genus, followed by impl
 
 An enhancement is a small change or addition to improve an existing feature. Any changes to a schema will most likely constitute a feature, not an enhancement.
 
-An enhancement can be compiled into a single commit, granted it is of small enough scope.
+- An enhancement can be compiled into a single commit, granted it is of small enough scope.
+- If the commit is refactoring or migrating existing code, the commit should be as small of a diff as possible to avoid a full, unreadable migration.
 
 ### Bug Fixes
 
