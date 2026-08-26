@@ -8,11 +8,12 @@ This document covers the voice, grammar, and naming conventions used across code
 
 ### History
 
-| Date       | Author     | Description                                                                          |
-| ---------- | ---------- | ------------------------------------------------------------------------------------ |
-| 2026-07-10 | Zach Smith | Release                                                                              |
-| 2026-07-17 | Zach Smith | Add General Language, Code sections                                                  |
-| 2026-07-28 | Zach Smith | Remove duplicate rules in General Language, add glossary note, add function comments |
+| Date       | Author     | Description                                                                                           |
+| ---------- | ---------- | ----------------------------------------------------------------------------------------------------- |
+| 2026-07-10 | Zach Smith | Release                                                                                               |
+| 2026-07-17 | Zach Smith | Add General Language, Code sections                                                                   |
+| 2026-07-28 | Zach Smith | Remove duplicate rules in General Language, add glossary note, add function comments                  |
+| 2026-08-07 | Zach Smith | Promote stateless rule from Code to General Language, fix function comments causing agentic artifacts |
 
 # Guideline
 
@@ -34,6 +35,16 @@ This document covers the voice, grammar, and naming conventions used across code
 
 - Use `i.e.` and `e.g.` inline for examples
 
+**State**
+
+All writing should be stateless, including code comments, READMEs, and technical documentation.
+
+- Never reference prior state, history, or transitions. Avoid works like "old", "new", "migrated from/to", etc.
+- Historical context should be exclusively reserved for commit messages and changelogs, not in any artifact itself.
+- Never make a assuming statement, such as "This app is deployed on an Azure VM".
+
+An example would be saying "This is a fast C++ program" instead of "This program has been converted from Python to C++ to be faster".
+
 ## Code
 
 ### Names
@@ -42,7 +53,7 @@ This document covers the voice, grammar, and naming conventions used across code
 - Each segment of names should be ordered from largest-scope to smallest-scope e.g. `name_first` not `first_name`
 - Booleans should read as a yes/no question e.g. `is_primary`, `enabled`
 
-Any industry-standard abbreviation that is not made clearer by its verbose form may be used, provided all source files utilizing the abbreviation contain a glossary listing the verbose name, abbreviation, and definition — e.g. `rts` → *Request to Send* in radio communication.
+Any industry-standard abbreviation that is not made clearer by its verbose form may be used, provided all source files utilizing the abbreviation contain a glossary listing the verbose name, abbreviation, and definition — e.g. `rts` → _Request to Send_ in radio communication.
 
 All object-oriented programming (OOP) languages should adhere to the following casing conventions:
 
@@ -61,8 +72,7 @@ Listed non-OOP languages should adhere to the following casing conventions:
 
 #### Language
 
-- The language of comments should continue to follow the [General Language](#general-language) rules, with a focus on terse, plain language
-- Comments should always be current state and never reference the state of previous code or mention migrations.
+- The language of comments should continue to follow the [General Language](#general-language) rules, with a focus on terseness and statelessness.
 - Comments do not need to be added to modified code unless the code necessitates a comment - reasons for modification should be captured in commit descriptions rather than code.
 
 #### Categories
@@ -74,7 +84,7 @@ Comments have the following categories:
 - Section comments: Comments for a large code block with multiple actions
 - Function comments: Comments describing the purpose of a function/method
 
-The prefixes like `Inline comment:` shown in the examples below are for illustration only and are not part of the required format.
+The prefixes `Inline comment:`, `Block comment:`, `Section comment:`, and `Function comment:` shown in the examples below are for illustration only and are not part of the required format.
 
 #### Inline Comments
 
