@@ -8,14 +8,6 @@ This document provides recommendations for the structure and section conventions
 
 Documentation following this guideline should also inherit the [Language Guideline](./LANGUAGE_GUIDELINE.md).
 
-### History
-
-| Date       | Author     | Description                                                |
-| ---------- | ---------- | ---------------------------------------------------------- |
-| 2026-07-10 | Zach Smith | Release                                                    |
-| 2026-07-13 | Zach Smith | Tweak prerequisite, change config props from list to table |
-| 2026-07-23 | Zach Smith | Add attributes rules, rename key table section             |
-
 # Guideline
 
 A README can either serve as the full end-to-end document for a small repository, or a brief scope and router to more detailed documentation. For larger repos, further documentation should live under `docs/`, and the README will route to that.

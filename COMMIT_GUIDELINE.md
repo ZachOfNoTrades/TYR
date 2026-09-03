@@ -6,13 +6,6 @@
 
 This document covers suggested scope and planning of Git repository commits, specifically to enhance repository conciseness, documentation, and understandability.
 
-### History
-
-| Date       | Author     | Description                                     |
-| ---------- | ---------- | ----------------------------------------------- |
-| 2026-03-31 | Zach Smith | Release                                         |
-| 2026-07-15 | Zach Smith | Added Commit Zero; Added "least diff" principle |
-
 ## Guidelines
 
 ### General Guidelines

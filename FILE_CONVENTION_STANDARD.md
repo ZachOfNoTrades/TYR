@@ -6,12 +6,6 @@
 
 This document covers the recommendations for file and directory organization for software development.
 
-### History
-
-| Date       | Author     | Description |
-| ---------- | ---------- | ----------- |
-| 2026-07-09 | Zach Smith | Draft       |
-
 ## Repositories
 
 Repositories are a collection of core files required for a project.

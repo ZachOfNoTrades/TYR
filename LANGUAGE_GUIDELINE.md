@@ -6,15 +6,6 @@
 
 This document covers the voice, grammar, and naming conventions used across codebases and technical documentation.
 
-### History
-
-| Date       | Author     | Description                                                                                           |
-| ---------- | ---------- | ----------------------------------------------------------------------------------------------------- |
-| 2026-07-10 | Zach Smith | Release                                                                                               |
-| 2026-07-17 | Zach Smith | Add General Language, Code sections                                                                   |
-| 2026-07-28 | Zach Smith | Remove duplicate rules in General Language, add glossary note, add function comments                  |
-| 2026-08-07 | Zach Smith | Promote stateless rule from Code to General Language, fix function comments causing agentic artifacts |
-
 # Guideline
 
 ## General Language
