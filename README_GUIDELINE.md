@@ -189,4 +189,4 @@ Use this section for any miscellaneous details that did not fall into any other 
 
 This section is optional. A credit tag can be added, crediting the company and author.
 
-`Developed for [ALERT TECH SMT](https://alerttechsmt.com/) by [Zach Smith](https://github.com/ZachOfNoTrades).`
+`Developed for [ZSMITH.IO](https://zsmith.io/) by [Zach Smith](https://github.com/ZachOfNoTrades).`
