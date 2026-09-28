@@ -63,7 +63,7 @@ Listed non-OOP languages should adhere to the following casing conventions:
 
 #### Language
 
-- The language of comments should continue to follow the [General Language](#general-language) rules, with a focus on terseness and statelessness.
+- The language of comments should continue to follow the [General Language](#general-language) rules, with a focus on plain, terse, and stateless wording.
 - Comments do not need to be added to modified code unless the code necessitates a comment - reasons for modification should be captured in commit descriptions rather than code.
 
 #### Categories
