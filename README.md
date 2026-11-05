@@ -8,6 +8,7 @@ TYR is a collection of documentation, language, and structure standards for soft
 - [README Guideline](./README_GUIDELINE.md)
 - [Commit Guideline](./COMMIT_GUIDELINE.md)
 - [Project Structure Standard](./PROJECT_STRUCTURE_STANDARD.md)
+- [CI/CD Guideline](./CICD_GUIDELINE.md)
 
 ## Contact
 
