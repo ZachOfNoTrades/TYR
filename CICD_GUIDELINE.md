@@ -185,7 +185,7 @@ Where a platform also needs a build number that only rises, the pipeline may set
 ### `2.E` Environments
 
 #### `2.E.1`
-Where a project has more than one target, a tag's label should select the target it names, and a tag without a label should target `prod`. No other input should select a target.
+Where a project has more than one target, a tag's label should select the target it names, and a tag without a label should target `prod`. No run-time input should select a target.
 
 ##### `2.E.1(a)`
 Targets:
@@ -215,7 +215,7 @@ Example:
 ```yaml
 on:
   push:
-    tags: ["v*"]
+    tags: ["[0-9]+.[0-9]+.[0-9]+*"]
   schedule:
     - cron: "0 9 * * *"
   workflow_dispatch:
@@ -235,10 +235,10 @@ jobs:
 Deploys to one target should run one at a time, ensuring two releases never switch the same host at once.
 
 #### `2.F.3`
-The `deploy` workflow should run on a version tag push, for the immediate pipeline, or on a schedule, for the scheduled pipeline, and never on a branch push, ensuring every deploy is a tagged version.
+The `deploy` workflow should run on a version tag push, for the immediate pipeline, or on a schedule, for the scheduled pipeline, and never on a branch push, ensuring every deploy is a tagged version. A manual run should start from the version tag it deploys. For example, a tag chosen as the run's ref.
 
 #### `2.F.4`
-A scheduled run should deploy its target's highest version tag when it is higher than the installed version, and do nothing otherwise, ensuring a scheduled run never rolls a target back.
+A scheduled run should deploy a target named in the workflow, using the highest version tag for that target, when it is higher than the installed version, and do nothing otherwise, ensuring a scheduled run never rolls a target back. For example, the highest `-dev` tag for `dev`.
 
 #### `2.F.5`
 A release whose deploy fails should stay as it is, and its fix should ship under a new tag, ensuring a published version never changes: the next counter for a labeled version, or the next patch otherwise. For example, `1.3.0-dev.3` after a failed `1.3.0-dev.2`.
@@ -308,15 +308,15 @@ environment: ${{ needs.release.outputs.target }}
 The deploy job should install exactly what was released, either by building the released tag on the host or by downloading the release's package and checking it against its checksum, ensuring a target never runs a build that was not released.
 
 #### `2.H.3`
-Where a deploy installs onto a host, it should run as an account that owns the deploy root and cannot become root, ensuring a release's code never runs as root. Where a step needs root, the account should be allowed only fixed commands, never a script a push can change. For example, `sudo systemctl restart {service}`.
+Where a deploy installs onto a host, it should run as an account that owns the deploy root and has no root access other than fixed commands, never a script or file a push can change, ensuring a release's code never runs as root. For example, `sudo systemctl restart {service}`.
 
 #### `2.H.4`
-The deploy account should not be in a group that grants root, ensuring it cannot become root. For example, the `docker` group.
+The deploy account should not be in a group that grants root, ensuring it gains no other root access. For example, the `docker` group.
 
 ### `2.J` Deployment Model
 
 #### `2.J.1`
-Where a release installs onto a host, it should install into its own directory under a deploy root, named for its version, ensuring the release live before it stays whole for a rollback.
+Where a release installs onto a host, it should install into a new directory under a deploy root, named for its version and its run, ensuring a rerun never writes into the active release and the release live before it stays whole for a rollback.
 
 #### `2.J.2`
 A `current` symlink should point at the active release, ensuring the service always runs from one path and a rollback only moves the link.
@@ -326,9 +326,9 @@ Example of [`2.J.1`](#2j1) and [`2.J.2`](#2j2):
 
 ```
 {deploy_root}/
-├── 1.2.0/
-├── 1.3.0/
-└── current -> 1.3.0
+├── 1.2.0_41/
+├── 1.3.0_57/
+└── current -> 1.3.0_57
 ```
 
 #### `2.J.3`
