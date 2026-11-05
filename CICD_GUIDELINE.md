@@ -61,6 +61,9 @@ A manual run of a workflow on a protected branch may build a pull request's code
 #### `2.A.4`
 Jobs should use a token that expires with the run and grants only what the job needs, not a personal access token. For example, the run's `github.token`.
 
+##### `2.A.4(a)`
+Where an outside service offers no token that expires with the run, the job should use the narrowest token the service offers, kept in the target's environment, ensuring a leaked token reaches as little as possible. For example, a Vercel token limited to one team.
+
 #### `2.A.5`
 Third-party pipeline steps, and repositories cloned during a run, should be pinned to a full commit hash, with the version in a comment, ensuring a moved tag cannot change what runs. For example, `actions/checkout@{commit_hash} # v4.3.1`.
 
@@ -316,13 +319,33 @@ The deploy account should not be in a group that grants root, ensuring it gains 
 ### `2.J` Deployment Model
 
 #### `2.J.1`
-Where a release installs onto a host, it should install into a new directory under a deploy root, named for its version and its run, ensuring a rerun never writes into the active release and the release live before it stays whole for a rollback.
+A release's database changes should keep working with the release live before it, ensuring a rollback never meets a schema it cannot read.
+
+##### `2.J.1(a)`
+Testing a release's database changes against the release live before it is recommended, ensuring a rollback is proven before it is needed. For example, applying the migrations, then running the previous release's tests.
 
 #### `2.J.2`
+A deploy should check the release's health once it is live, giving the app time to start. When the check fails, it should return the target to the release live before it and fail, ensuring a bad release never stays live. For example, pointing `current` back and restarting the service.
+
+#### `2.J.3`
+The health check should make a request that reaches what the release itself needs to serve, and change nothing, ensuring it proves the release works without side effects. For example, an API request that reads the app's own database. A service the app only calls should stay out of the check, as its outage would roll back a good release.
+
+#### `2.J.4`
+An alert for a failed release or deploy is recommended, ensuring a failure is noticed without watching the run.
+
+### `2.K` Host Installs
+
+#### `2.K.1`
+This section applies where a release installs onto a host as files. A hosting platform or container runtime that keeps each release and switches between them should use its own releases and rollback instead. For example, promoting the previous deployment.
+
+#### `2.K.2`
+A release should install into a new directory under a deploy root, named for its version and its run, ensuring a rerun never writes into the active release and the release live before it stays whole for a rollback.
+
+#### `2.K.3`
 A `current` symlink should point at the active release, ensuring the service always runs from one path and a rollback only moves the link.
 
-##### `2.J.2(a)`
-Example of [`2.J.1`](#2j1) and [`2.J.2`](#2j2):
+##### `2.K.3(a)`
+Example of [`2.K.2`](#2k2) and [`2.K.3`](#2k3):
 
 ```
 {deploy_root}/
@@ -331,51 +354,39 @@ Example of [`2.J.1`](#2j1) and [`2.J.2`](#2j2):
 └── current -> 1.3.0_57
 ```
 
-#### `2.J.3`
+#### `2.K.4`
 Data the app writes and keeps should live outside the release directories, reached from each release by a link or a setting, ensuring a new release starts with it and removing an old release never deletes it. For example, uploaded files.
 
-#### `2.J.4`
-A release's database changes should keep working with the release live before it, ensuring a rollback never meets a schema it cannot read.
-
-#### `2.J.5`
-A deploy should check the release's health after `current` moves, giving the app time to start. When the check fails, it should point `current` back at the release live before it, restart the service and fail, ensuring a bad release never stays live.
-
-#### `2.J.6`
-The health check should make a request that reaches what the app depends on, and change nothing, ensuring it proves the release works without side effects. For example, an API request that reads the database.
-
-#### `2.J.7`
-An alert for a failed release or deploy is recommended, ensuring a failure is noticed without watching the run.
-
-#### `2.J.8`
+#### `2.K.5`
 Where a deploy removes old releases, it should never remove the active release or the release live before it, ensuring a rollback stays possible.
 
-### `2.K` Cross-Repository Triggers
-
-#### `2.K.1`
-A release that starts a build in another repository should send that repository a named event carrying its version. For example, `repository_dispatch` with a `client_payload`.
-
-#### `2.K.2`
-Access to another repository should use a token limited to the repositories it needs, following [`2.A.4`](#2a4). For example, a GitHub App installation token from `actions/create-github-app-token`.
-
-### `2.L` Documentation
+### `2.L` Cross-Repository Triggers
 
 #### `2.L.1`
+A release that starts a build in another repository should send that repository a named event carrying its version. For example, `repository_dispatch` with a `client_payload`.
+
+#### `2.L.2`
+Access to another repository should use a token limited to the repositories it needs, following [`2.A.4`](#2a4). For example, a GitHub App installation token from `actions/create-github-app-token`.
+
+### `2.M` Documentation
+
+#### `2.M.1`
 Every repository with a `release` or `deploy` workflow should document its pipeline in `docs/deployment/CICD_DEPLOYMENT.md`, following the [Project Structure Standard](./PROJECT_STRUCTURE_STANDARD.md). These sections are recommended:
 
-- `2.L.1(a)`
+- `2.M.1(a)`
 Overview: the workflows and what each one checks.
 
-- `2.L.1(b)`
+- `2.M.1(b)`
 Targets: how a tag selects a target, and which pipeline each target uses.
 
-- `2.L.1(c)`
+- `2.M.1(c)`
 Configuration: every setting and secret the pipeline reads, and where each lives.
 
-- `2.L.1(d)`
+- `2.M.1(d)`
 Deployment Model: where a release lands, how the active release is selected, and where the data the app keeps lives.
 
-- `2.L.1(e)`
+- `2.M.1(e)`
 Release Procedure: the tag format, how to start a release by tag or by a manual run, and what to check afterward, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
 
-- `2.L.1(f)`
+- `2.M.1(f)`
 Pipeline Operations: redeploying, rolling back, and applying a changed setting to the host, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions). A deploy without the pipeline belongs in `MANUAL_DEPLOYMENT.md`.
