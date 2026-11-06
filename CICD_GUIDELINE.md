@@ -146,6 +146,9 @@ Scripts the pipeline runs pass their own tests. For example, a deploy script.
 #### `2.C.4`
 A merge should require the `check` workflow to pass. For example, a branch rule that lists its jobs as required checks.
 
+##### `2.C.4(a)`
+Where the platform cannot require a check for a merge, the `release` workflow's check in [`2.G.2`](#2g2) is the gate, ensuring an unchecked commit is still never released.
+
 #### `2.C.5`
 The `check` workflow should not need secrets, ensuring code or a dependency under review never sees one. Where a process needs a setting to start, the workflow should use a placeholder value. For example, a dummy `NEXTAUTH_SECRET`.
 
@@ -213,7 +216,7 @@ A device installed from an image should get its secrets when it is set up, not f
 Where environment settings and secrets live on the platform, the deploy should apply them to the host on every run, ensuring a change on the platform reaches the host with the next deploy.
 
 #### `2.E.4`
-The deploy should replace the host's settings rather than add to them, ensuring the host never keeps a setting the platform no longer holds.
+Where the deploy applies settings to the host, it should replace them rather than add to them, ensuring the host never keeps a setting the platform no longer holds.
 
 ### `2.F` Pipelines
 
