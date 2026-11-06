@@ -182,10 +182,10 @@ A labeled version may carry a counter after its label, separated by a dot, allow
 A build should take its version from the version tag being deployed, whether the pipeline or a manual deploy runs it, and use it everywhere the app reports a version.
 
 #### `2.D.9`
-A build with no version tag should fail, ensuring an untagged build never deploys.
+A release build with no version tag should fail, ensuring an untagged build is never published. A check or local build may use the placeholder version from [`2.D.4`](#2d4).
 
 #### `2.D.10`
-Where a platform also needs a build number that only rises, the pipeline may set it from the run count, as it is not the version. For example, an Android `versionCode`.
+Where a platform also needs a build number that only rises, the pipeline may derive it from the version, ensuring a higher version always gets a higher number. For example, an Android `versionCode`.
 
 ### `2.E` Environments
 
@@ -345,7 +345,13 @@ A release's database changes should keep working with the release live before it
 Testing a release's database changes against the release live before it is recommended, ensuring a rollback is proven before it is needed. For example, applying the migrations, then running the previous release's tests.
 
 #### `2.J.2`
-A deploy should check the release's health once it is live, giving the app time to start. When the check fails, it should return the target to the release live before it and fail, ensuring a bad release never stays live. For example, pointing `current` back and restarting the service. Where a release reads its settings from a service when it starts, the deploy should confirm that service answers before it switches, ensuring the rollback can start the release before it.
+A deploy should check the release's health once it is live, giving the app time to start. When the check fails, it should return the target to the release live before it and fail, ensuring a bad release never stays live. For example, pointing `current` back and restarting the service.
+
+##### `2.J.2(a)`
+Where a release reads its settings from a service when it starts, the deploy should confirm that service answers before it switches, ensuring the rollback can start the release before it.
+
+##### `2.J.2(b)`
+Where a target cannot return to an earlier release, the rollback does not apply. For example, a device that refuses a lower build number.
 
 #### `2.J.3`
 The health check should make a request that reaches what the release itself needs to serve, and change nothing, ensuring it proves the release works without side effects. For example, an API request that reads the app's own database. A service the app only calls should stay out of the check, as its outage would roll back a good release.
