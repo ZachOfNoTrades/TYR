@@ -207,7 +207,7 @@ Environment settings and secrets should live outside the repository and its rele
 Where environment settings and secrets live on the platform, the deploy should apply them to the host on every run, ensuring a change on the platform reaches the host with the next deploy.
 
 #### `2.E.4`
-The deploy should replace the host's settings rather than add to them, ensuring the host never keeps a setting the platform no longer holds.
+Where the deploy applies settings to the host, it should replace them rather than add to them, ensuring the host never keeps a setting the platform no longer holds.
 
 ### `2.F` Pipelines
 
