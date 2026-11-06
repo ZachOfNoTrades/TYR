@@ -30,12 +30,14 @@ Definitions:
 | Hosted runner | A runner the platform provides, started fresh for each job. |
 | Self-hosted runner | A runner on a machine outside the platform. |
 | Protected branch | A branch that only takes changes through a merge rule. For example, `main`. |
+| Protected tag | A tag that only takes pushes a rule allows. For example, a tag ruleset limited to maintainers. |
 | Manual run | A run started on request, through the platform's interface or API, rather than by a push, tag or schedule. |
 | Version tag | A tag that names a version. |
 | Label | The part of a version after its dash, naming a target. For example, `dev` in `1.2.3-dev.2`. |
 | Counter | The number after a label, allowing more builds of one version. For example, `2` in `1.2.3-dev.2`. |
 | Target | A place a release is installed, named by its label, or `prod` without one. |
 | Release | The published files for a version tag, held by the platform. |
+| Promoted build | A release whose files come from a tested build instead of a new one. |
 | Deploy | Installing a release on its target. |
 | Immediate pipeline | A deploy started by a version tag push. |
 | Scheduled pipeline | A deploy started by a schedule. |
@@ -50,13 +52,13 @@ Definitions:
 Workflows must go in the folder the platform reads. For example, `.github/workflows/`.
 
 #### `2.A.2`
-Jobs should run on hosted runners, ensuring code from a pull request never reaches a private host without a manual run. A job that must reach a private host or network, or that needs access or hardware a hosted runner lacks, should run on a self-hosted runner inside that network, following [`2.A.3`](#2a3).
+Jobs should run on hosted runners, ensuring code from a pull request never reaches a private host. A job that must reach a private host or network, or that needs access or hardware a hosted runner lacks, should run on a self-hosted runner inside that network, following [`2.A.3`](#2a3).
 
 #### `2.A.3`
-A self-hosted runner should only take jobs from workflows on protected branches or tags, ensuring a branch cannot change its own workflow to run on it. For example, a runner group limited to `deploy.yml`.
+A self-hosted runner should only take jobs from workflows on protected branches or protected tags, ensuring a branch cannot change its own workflow to run on it. For example, a runner group limited to `deploy.yml`.
 
 ##### `2.A.3(a)`
-A manual run of a workflow on a protected branch may build a pull request's code on a self-hosted runner, ensuring pull request code only reaches the host through a deliberate run. For example, a device image tested on hardware before its merge.
+Where the platform cannot limit a self-hosted runner to certain workflows, only trusted accounts should be able to start a job in its repository, ensuring no one outside them can send the runner a job. For example, approval for every run from an outside contributor.
 
 #### `2.A.4`
 Jobs should use a token that expires with the run and grants only what the job needs, not a personal access token. For example, the run's `github.token`.
@@ -82,7 +84,7 @@ A secret should hold one value, not structured data, ensuring the platform can h
 ### `2.B` Workflows
 
 #### `2.B.1`
-Every repository should have a `check` workflow. A repository that publishes versions should also have a `release` workflow, and one that installs onto a target should also have a `deploy` workflow.
+Every repository should have a `check` workflow. A repository that publishes versions should also have a `release` workflow, and one that installs onto a target should also have a `deploy` workflow, unless an agent on the target deploys, following [`2.F.6`](#2f6).
 
 ##### `2.B.1(a)`
 Workflows:
@@ -145,7 +147,10 @@ Scripts the pipeline runs pass their own tests. For example, a deploy script.
 A merge should require the `check` workflow to pass. For example, a branch rule that lists its jobs as required checks.
 
 #### `2.C.5`
-The `check` workflow should not need secrets, ensuring code from a pull request never sees one. Where a process needs a setting to start, the workflow should use a placeholder value. For example, a dummy `NEXTAUTH_SECRET`.
+The `check` workflow should not need secrets, ensuring code or a dependency under review never sees one. Where a process needs a setting to start, the workflow should use a placeholder value. For example, a dummy `NEXTAUTH_SECRET`.
+
+##### `2.C.5(a)`
+Where a check needs a private dependency, it should read it without a stored secret, ensuring the check holds none. For example, a package that grants the repository read access, read with the run's own token.
 
 #### `2.C.6`
 The `check` workflow should only have repository read permissions, following [`2.A.4`](#2a4). For example, `permissions: contents: read` in [`2.C.1(a)`](#2c1a).
@@ -201,6 +206,9 @@ Targets:
 #### `2.E.2`
 Environment settings and secrets should live outside the repository and its releases, in a place the deploy or the app can read, ensuring a secret never reaches the repository or a release. For example, GitHub Environments.
 
+##### `2.E.2(a)`
+A device installed from an image should get its secrets when it is set up, not from the image. For example, a flashing step that writes them from the secret store.
+
 #### `2.E.3`
 Where environment settings and secrets live on the platform, the deploy should apply them to the host on every run, ensuring a change on the platform reaches the host with the next deploy.
 
@@ -245,6 +253,15 @@ A scheduled run should deploy a target named in the workflow, using the highest 
 
 #### `2.F.5`
 A release whose deploy fails should stay as it is, and its fix should ship under a new tag, ensuring a published version never changes: the next counter for a labeled version, or the next patch otherwise. For example, `1.3.0-dev.3` after a failed `1.3.0-dev.2`.
+
+#### `2.F.6`
+Where a runner should not reach the target, an agent on the target may deploy instead, following the rules for a deploy job other than [`2.H.1`](#2h1). It should install its target's highest published version when it is higher than the installed version, ensuring the target needs no inbound access.
+
+##### `2.F.6(a)`
+Reporting the agent's result to the platform is recommended, ensuring a failed deploy shows beside its release. For example, a deployment status.
+
+#### `2.F.7`
+A scheduled run or agent should not retry a version that failed on its target, ensuring a bad release is not installed again on every run. For example, until a manual retry or a higher version.
 
 ### `2.G` Release Workflow
 
@@ -292,7 +309,16 @@ gh release edit "${TAG}" --draft=false
 Where the target installs a built package, the `release` workflow should build it and attach it to the release with its checksum, ensuring the deploy can confirm it installs the exact file published.
 
 #### `2.G.9`
-Where a build is costly or its test runs on the built files themselves, the pipeline may build once, test that build, and publish the tested files without rebuilding, ensuring the released files are the ones tested. For example, a device image tested on hardware.
+A pipeline may build once, test the build, then publish the tested files without rebuilding, ensuring the released files are the files tested. For example, a costly build that needs a hardware test before it is published. A promoted build should:
+
+- `2.G.9(a)`
+Take only files whose test passed for those exact files. For example, the release of `1.3.0-dev.2` promoted as `1.3.0` on the same commit.
+
+- `2.G.9(b)`
+Change only the files that record the version, setting its own tag's version.
+
+- `2.G.9(c)`
+Prove that nothing else differs in what the target runs, ensuring the promoted release runs the tested software. For example, a file-by-file comparison of each image's file systems.
 
 ### `2.H` Deploy Job
 
@@ -336,7 +362,7 @@ An alert for a failed release or deploy is recommended, ensuring a failure is no
 ### `2.K` Host Installs
 
 #### `2.K.1`
-This section applies where a release installs onto a host as files. A hosting platform or container runtime that keeps each release and switches between them should use its own releases and rollback instead. For example, promoting the previous deployment.
+This section applies where a release installs onto a host as files. A hosting platform or container runtime that keeps each release and switches between them should use its own releases and rollback instead. For example, switching back to the previous deployment.
 
 #### `2.K.2`
 A release should install into a new directory under a deploy root, named for its version and its run, ensuring a rerun never writes into the active release and the release live before it stays whole for a rollback.
