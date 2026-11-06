@@ -55,7 +55,7 @@ Workflows must go in the folder the platform reads. For example, `.github/workfl
 Jobs should run on hosted runners, ensuring code from a pull request never reaches a private host. A job that must reach a private host or network, or that needs access or hardware a hosted runner lacks, should run on a self-hosted runner inside that network, following [`2.A.3`](#2a3).
 
 #### `2.A.3`
-A self-hosted runner should only take jobs from workflows on protected branches or protected tags, ensuring a branch cannot change its own workflow to run on it. For example, a runner group limited to `deploy.yml`.
+A self-hosted runner should only take jobs from workflows on protected branches, or on protected tags that only the accounts allowed to change a protected branch can push, ensuring a branch cannot change its own workflow to run on it. For example, a runner group limited to `deploy.yml`.
 
 ##### `2.A.3(a)`
 Where the platform cannot limit a self-hosted runner to certain workflows, only trusted accounts should be able to start a job in its repository, ensuring no one outside them can send the runner a job. For example, approval for every run from an outside contributor.
@@ -161,7 +161,7 @@ Running a linter on shell scripts is recommended. For example, `shellcheck`.
 A version should come from a version tag pushed before the pipeline runs.
 
 #### `2.D.2`
-A version should never be chosen automatically. For example, a scheduled run should not raise the patch number.
+A version should never be worked out by the pipeline. For example, a scheduled run should not raise the patch number.
 
 #### `2.D.3`
 No file in the repository should hold the current version, ensuring it can never disagree with its tag.
@@ -345,7 +345,7 @@ A release's database changes should keep working with the release live before it
 Testing a release's database changes against the release live before it is recommended, ensuring a rollback is proven before it is needed. For example, applying the migrations, then running the previous release's tests.
 
 #### `2.J.2`
-A deploy should check the release's health once it is live, giving the app time to start. When the check fails, it should return the target to the release live before it and fail, ensuring a bad release never stays live. For example, pointing `current` back and restarting the service.
+A deploy should check the release's health once it is live, giving the app time to start. When the check fails, it should return the target to the release live before it and fail, ensuring a bad release never stays live. For example, pointing `current` back and restarting the service. Where a release reads its settings from a service when it starts, the deploy should confirm that service answers before it switches, ensuring the rollback can start the release before it.
 
 #### `2.J.3`
 The health check should make a request that reaches what the release itself needs to serve, and change nothing, ensuring it proves the release works without side effects. For example, an API request that reads the app's own database. A service the app only calls should stay out of the check, as its outage would roll back a good release.
