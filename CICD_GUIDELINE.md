@@ -397,7 +397,7 @@ Access to another repository should use a token limited to the repositories it n
 ### `2.M` Documentation
 
 #### `2.M.1`
-Every repository with a `release` or `deploy` workflow should document its pipeline in `docs/deployment/CICD_DEPLOYMENT.md`, following the [Project Structure Standard](./PROJECT_STRUCTURE_STANDARD.md). These sections are recommended:
+Every repository with a `release` or `deploy` workflow should document its pipeline in `docs/deployment/CICD_DEPLOYMENT.md`, following the [Project Structure Guideline](./PROJECT_STRUCTURE_GUIDELINE.md). These sections are recommended:
 
 - `2.M.1(a)`
 Overview: the workflows and what each one checks.
@@ -412,7 +412,7 @@ Configuration: every setting and secret the pipeline reads, and where each lives
 Deployment Model: where a release lands, how the active release is selected, and where the data the app keeps lives.
 
 - `2.M.1(e)`
-Release Procedure: the tag format, how to start a release by tag or by a manual run, and what to check afterward, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
+Release Procedure: the tag format, how to start a release by tag or by a manual run, and what to check afterward, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 - `2.M.1(f)`
-Pipeline Operations: redeploying, rolling back, and applying a changed setting to the host, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions). A deploy without the pipeline belongs in `MANUAL_DEPLOYMENT.md`.
+Pipeline Operations: redeploying, rolling back, and applying a changed setting to the host, following the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions). A deploy without the pipeline belongs in `MANUAL_DEPLOYMENT.md`.
