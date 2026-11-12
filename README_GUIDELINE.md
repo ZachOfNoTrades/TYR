@@ -74,7 +74,7 @@ Provide a definition sentence or paragraph under the title: `<Name> is a <what i
 ### `2.E` Features
 
 #### `2.E.1`
-List features as bold lead-in bullets: `- **Central Server Integration**: The Datapack network uses a centralized server...`.
+List features as bold lead-in bullets: `- **Offline Mode**: The app keeps working without a network connection...`.
 
 #### `2.E.2`
 The lead-in is the feature name in Title Case; the description is one sentence after the colon.
@@ -172,7 +172,7 @@ Key Table
 Configuration Instructions
 
 #### `2.H.3`
-Sample Config Code Fence: Provide a sample configuration. If the project uses a binary config file such as `config.json`, it is recommended to structure the code fence like the file structure.
+Sample Config Code Fence: Provide a sample configuration. If the project uses a config file such as `config.json`, it is recommended to structure the code fence like the file structure.
 
 ##### `2.H.3(a)`
 Example:
