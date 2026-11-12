@@ -99,7 +99,7 @@ A level-3 subheading containing all the required hardware, accounts, permissions
 
 #### Instructions
 
-Robust instructions to set up requirements and the project. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
+Robust instructions to set up requirements and the project. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 Long procedures may be phased into multiple level-3 subsections.
 
@@ -167,11 +167,11 @@ A table should be provided with the following columns:
 
 ### Configuration Instructions
 
-Brief instructions how to set up the configuration. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
+Brief instructions how to set up the configuration. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 ## Usage
 
-Brief instructions on how to use the software. This section should be omitted if there is a dedicated usage document. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
+Brief instructions on how to use the software. This section should be omitted if there is a dedicated usage document. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 ## Updating
 
@@ -179,7 +179,7 @@ This section will provide instructions how to update from different versions of 
 
 - Each version migration will have a dedicated subsection (`## v4.x > v5.x`)
 - If an update re-uses steps found in the instructions, reference that section rather than repeating (`Follow steps in [Host Setup](#host-setup)`).
-- This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#instructions).
+- This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 ## Notes
 
