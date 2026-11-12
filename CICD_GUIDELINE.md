@@ -397,7 +397,7 @@ Access to another repository should use a token limited to the repositories it n
 ### `2.M` Documentation
 
 #### `2.M.1`
-Every repository with a `release` or `deploy` workflow should document its pipeline in `docs/deployment/CICD_DEPLOYMENT.md`, following the [Project Structure Standard](./PROJECT_STRUCTURE_STANDARD.md). These sections are recommended:
+Every repository with a `release` or `deploy` workflow should document its pipeline in `docs/deployment/CICD_DEPLOYMENT.md`, following the [Project Structure Guideline](./PROJECT_STRUCTURE_GUIDELINE.md). These sections are recommended:
 
 - `2.M.1(a)`
 Overview: the workflows and what each one checks.
