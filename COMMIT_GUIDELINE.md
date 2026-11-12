@@ -18,7 +18,7 @@ Every commit is a testable chunk via either machine interface (e.g., API) or thr
 Commits should be written with conciseness in mind, as if every line of code is going to be manually reviewed.
 
 #### `2.A.3`
-The following sections will use a animal data recording program with a presentation, interface, and business logic layer. This program also connects to a SQL database.
+The following sections will use an animal data recording program with a presentation, interface, and business logic layer. This program also connects to a SQL database.
 
 ### `2.B` Feature Plan
 
@@ -42,7 +42,7 @@ For anything involving RESTful API or CRUD operations, only a get/read operation
 For projects with a frontend, the UI should add the absolute bare minimum UI functionality to fetch and display data for the new feature. It is acceptable for the UI implementation to follow the style of the project's theme.
 
 #### `2.D.4`
-Depending on the project and feature, this initial fetch functionality may be fetching all records or just a a target record.
+Depending on the project and feature, this initial fetch functionality may be fetching all records or just a target record.
 
 #### `2.D.5`
 Any database files and sample/test files should also be modified as appropriate.
@@ -54,7 +54,7 @@ The code added in the first commit must be concise and as isolated from other co
 There should be no tweaks to presentation layer unrelated to implementation of this commit.
 
 #### `2.D.8`
-Example: For the first commit, the proof of concept will be the ability to read the the details of a Genus record.
+Example: For the first commit, the proof of concept will be the ability to read the details of a Genus record.
 
 1. Add Genus object to schema (e.g., create the Genus table for SQL. Note that at this point, the Genus ID column would not be added to the animal table yet).
 1. Modify test files and inject Genus test data into database.
@@ -67,10 +67,10 @@ Example: For the first commit, the proof of concept will be the ability to read 
 The second commit should focus on creating remaining RESTful API and/or CRUD operations from the first commit's changes.
 
 #### `2.E.2`
-Update any frontend should implement UI elements for newly implemented operations.
+Any frontend should implement UI elements for newly implemented operations.
 
 #### `2.E.3`
-The second commit should NOT add enhancements or quality-of-life improvements for the feature, it is strictly to complete RESTful/CRUD operations.
+The second commit should NOT add enhancements or quality-of-life improvements for the feature; it is strictly to complete RESTful/CRUD operations.
 
 #### `2.E.4`
 There should be no tweaks to presentation layer unrelated to implementation of this commit.

@@ -34,7 +34,7 @@ All headings are Title Case.
 ### `2.C` Structure
 
 #### `2.C.1`
-READMEs should only use the the following main sections, and in the following order. Sections that do not apply or have dedicated documentation in `docs/` should be omitted.
+READMEs should only use the following main sections, and in the following order. Sections that do not apply or have dedicated documentation in `docs/` should be omitted.
 
 - `2.C.1(a)`
 Title and Definition
@@ -188,7 +188,7 @@ Example:
 Key Table: A table should be provided with the following columns:
 
 - `2.H.4(a)`
-**Key**: the key name
+**Key**: The key name
 
 - `2.H.4(b)`
 **Type**: The data type of the key
@@ -256,7 +256,7 @@ Sample table:
 ```
 
 #### `2.H.12`
-Configuration Instructions: Brief instructions how to set up the configuration. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
+Configuration Instructions: Brief instructions on how to set up the configuration. This section should follow the [Language Guideline Instructions section](./LANGUAGE_GUIDELINE.md#2h-instructions).
 
 ### `2.I` Usage
 
@@ -266,7 +266,7 @@ Brief instructions on how to use the software. This section should be omitted if
 ### `2.J` Updating
 
 #### `2.J.1`
-This section will provide instructions how to update from different versions of the project.
+This section will provide instructions on how to update from different versions of the project.
 
 #### `2.J.2`
 Each version migration will have a dedicated subsection (`## v4.x > v5.x`)
