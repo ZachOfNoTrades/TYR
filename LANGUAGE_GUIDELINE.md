@@ -45,13 +45,13 @@ Use `i.e.` and `e.g.` inline for examples
 All writing should be stateless, including code comments, READMEs, and technical documentation.
 
 - `2.A.4(a)`
-Never reference prior state, history, or transitions. Avoid works like "old", "new", "migrated from/to", etc.
+Never reference prior state, history, or transitions. Avoid words like "old", "new", "migrated from/to", etc.
 
 - `2.A.4(b)`
 Historical context should be exclusively reserved for commit messages and changelogs, not in any artifact itself.
 
 - `2.A.4(c)`
-Never make a assuming statement, such as "This app is deployed on an Azure VM".
+Never make an assuming statement, such as "This app is deployed on an Azure VM".
 
 - `2.A.4(d)`
 An example would be saying "This is a fast C++ program" instead of "This program has been converted from Python to C++ to be faster".

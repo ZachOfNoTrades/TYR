@@ -44,7 +44,7 @@ repo/
 ```
 
 #### `2.B.2`
-**docs/deployment/**: At a minimum, a manual deployment guide must exist. Additional deployment guides (e.g. CICD, Vercel) should exist as project requires.
+**docs/deployment/**: At a minimum, a manual deployment guide must exist. Additional deployment guides (e.g. CICD, Vercel) should exist as the project requires.
 
 ### `2.C` Naming Conventions
 
@@ -55,7 +55,7 @@ All files and directories related to a software development project should exclu
 Documentation files should be all uppercase letters.
 
 #### `2.C.3`
-All files and directories (including documentation files) should exclude spaces. Spaces can be supplemented with either a underscore (`_`) or dash (`-`).
+All files and directories (including documentation files) should exclude spaces. Spaces can be supplemented with either an underscore (`_`) or dash (`-`).
 
 ##### `2.C.3(a)`
 Example:
